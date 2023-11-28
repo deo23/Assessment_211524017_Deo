@@ -37,10 +37,24 @@ const getKasir = async (kodeKasir) => {
   }
 };
 
+const createKasir = async ({ kodeKasir, nama, hp }) => {
+    try {
+      // Insert the new kasir into the database
+      const query = 'INSERT INTO kasir (kodekasir, nama, hp) VALUES ($1, $2, $3) RETURNING *;';
+      const result = await client.query(query, [kodeKasir, nama, hp]);
+  
+      return result.rows[0]; // Return the newly created kasir
+    } catch (error) {
+      console.error('Error creating kasir:', error);
+      throw error;
+    }
+  };
+
 // Add similar update function as in the Barang model
 
 module.exports = {
   Kasir,
   getKasir,
+    createKasir,
   // add updateKasir function here
 };

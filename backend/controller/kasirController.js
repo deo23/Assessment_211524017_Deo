@@ -1,6 +1,7 @@
 // kasirController.js
 
 const { Kasir, getKasir, updateKasir } = require('../model/kasirModel');
+const { createKasir } = require('../model/kasirModel');
 
 const getKasirController = async (req, res) => {
   const { kodeKasir } = req.params;
@@ -28,7 +29,20 @@ const updateKasirController = async (req, res) => {
   }
 };
 
+const createKasirController = async (req, res) => {
+    const { kodeKasir, nama, hp } = req.body;
+  
+    try {
+      const newKasir = await createKasir({ kodeKasir, nama, hp });
+      res.json(newKasir);
+    } catch (error) {
+      console.error('Error creating kasir:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
 module.exports = {
   getKasirController,
   updateKasirController,
+    createKasirController,
 };
