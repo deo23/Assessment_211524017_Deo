@@ -13,14 +13,16 @@ client.connect();
 
 // Define the structure of the Barang table
 class Barang {
-    constructor({ KodeBarang, NamaBarang, Satuan, HargaSatuan, Stok }) {
-      this.kodeBarang = KodeBarang;
-      this.namaBarang = NamaBarang;
-      this.satuan = Satuan;
-      this.hargaSatuan = HargaSatuan;
-      this.stok = Stok;
+    constructor({ kodebarang, namabarang, satuan, hargasatuan, stok }) {
+      this.kodeBarang = kodebarang;
+      this.namaBarang = namabarang;
+      this.satuan = satuan;
+      this.hargaSatuan = hargasatuan;
+      this.stok = stok;
     }
   }
+  
+  
 
 const createBarang = async (barangData) => {
     const { kodeBarang, namaBarang, satuan, hargasatuan, stok } = barangData;
@@ -48,15 +50,26 @@ const createBarang = async (barangData) => {
 
 // Function to fetch data for a specific Barang
 const getBarang = async (kodeBarang) => {
-    const result = await client.query('SELECT * FROM barang WHERE kodebarang = $1', [kodeBarang]);
-  const values = [kodeBarang];
-
-  if (result.rows.length > 0) {
-    return new Barang(result.rows[0]); // This is where the error occurs
-  } else {
-    return null;
-  }
-};
+    try {
+      console.log('Fetching barang data for kodeBarang:', kodeBarang);
+      const result = await client.query('SELECT * FROM barang WHERE kodebarang = $1', [kodeBarang]);
+  
+      if (result.rows.length > 0) {
+        const barangData = result.rows[0];
+        const barang = new Barang(barangData);
+        console.log('Fetched barang data:', barang);
+        return barang;
+      } else {
+        console.log('Barang not found for kodeBarang:', kodeBarang);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error fetching barang data:', error);
+      throw error;
+    }
+  };
+  
+  
 
 // Function to update data for a specific Barang
 const updateBarang = async (barangData) => {
@@ -88,6 +101,19 @@ const updateBarang = async (barangData) => {
       throw error; // Rethrow the error for handling in the controller
     }
   };
+
+  const viewBarang = async () => {
+    try {
+      // Fetch barang data from the database
+      const query = 'SELECT * FROM barang;';
+      const result = await client.query(query);
+  
+      return result.rows;
+    } catch (error) {
+      console.error('Error fetching barang data:', error);
+      throw error; // Rethrow the error for handling in the controller
+    }
+  };
     
   
 
@@ -95,5 +121,6 @@ module.exports = {
   Barang,
   getBarang,
   updateBarang,
-  createBarang
+  createBarang,
+    viewBarang,
 };

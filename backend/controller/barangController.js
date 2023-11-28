@@ -2,6 +2,7 @@
 
 const { Barang, getBarang, updateBarang } = require('../model/barangModel');
 const { createBarang } = require('../model/barangModel');
+const { viewBarang } = require('../model/barangModel');
 
 const getBarangController = async (req, res) => {
   const { kodeBarang } = req.params;
@@ -66,11 +67,21 @@ const createBarangController = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
   };
-    
+
+  const viewBarangController = async (req, res) => {
+    try {
+      const barangData = await viewBarang();
+      res.status(200).json(barangData);
+    } catch (error) {
+      console.error('Error fetching barang data:', error);
+      res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+  };
 
 
 module.exports = {
   getBarangController,
   updateBarangController,
   createBarangController,
+    viewBarangController
 };
