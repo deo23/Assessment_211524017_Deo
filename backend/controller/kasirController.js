@@ -1,6 +1,6 @@
 // kasirController.js
 
-const { Kasir, getKasir, updateKasir } = require('../model/kasirModel');
+const { Kasir, getKasir, updateKasir, deleteKasir } = require('../model/kasirModel');
 const { createKasir } = require('../model/kasirModel');
 const { getAllKasir } = require('../model/kasirModel');
 
@@ -59,10 +59,27 @@ const getAllKasirController = async (req, res) => {
   }
 };
 
+const deleteKasirController = async (req, res) => {
+    const { kodeKasir } = req.params;
+  
+    try {
+      const deletedKasir = await deleteKasir(kodeKasir);
+      if (deletedKasir) {
+        res.json({ message: 'Kasir deleted successfully' });
+      } else {
+        res.status(404).json({ error: 'Kasir not found' });
+      }
+    } catch (error) {
+      console.error('Error deleting kasir:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
 
 module.exports = {
   getKasirController,
   updateKasirController,
     createKasirController,
     getAllKasirController,
+    deleteKasirController,
 };

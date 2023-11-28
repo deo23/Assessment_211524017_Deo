@@ -84,6 +84,25 @@ const getAllKasir = async () => {
     throw error;
   }
 };
+
+const deleteKasir = async (kodeKasir) => {
+    try {
+      // Check if the kasir exists
+      const existingKasir = await getKasir(kodeKasir);
+      if (!existingKasir) {
+        return null; // Kasir not found
+      }
+  
+      // Delete the kasir from the database
+      const query = 'DELETE FROM kasir WHERE kodekasir = $1 RETURNING *;';
+      const result = await client.query(query, [kodeKasir]);
+  
+      return result.rows[0]; // Return the deleted kasir
+    } catch (error) {
+      console.error('Error deleting kasir:', error);
+      throw error;
+    }
+  };
   
 
 module.exports = {
@@ -92,5 +111,6 @@ module.exports = {
     createKasir,
     updateKasir,
     getAllKasir,
+    deleteKasir,
   // add updateKasir function here
 };
