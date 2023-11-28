@@ -4,6 +4,7 @@ import FormBarang from './components/formBarang';
 // import FormUpdateBarang from './components/FormUpdateBarang';
 import ViewDataBarang from './components/ViewDataBarang';
 import FormKasir from './components/formKasir';
+import ViewDataKasir from './components/ViewDataKasir';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       {/* <FormUpdateBarang /> */}
       <ViewDataBarang />
       <FormKasir />
+      <ViewDataKasir />
     </div>
   );
 }
