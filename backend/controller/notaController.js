@@ -7,10 +7,11 @@ const getNotaController = async (req, res) => {
 
   try {
     const nota = await getNota(kodenota);
+
     if (nota) {
       res.json(nota);
     } else {
-      res.status(404).json({ error: 'Nota not found' });
+      res.status(404).json({ error: 'Shopping receipt not found' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });

@@ -34,15 +34,15 @@ class Nota {
 }
 
 const getNota = async (kodenota) => {
-  const getNotaQuery = 'SELECT * FROM Nota WHERE Kodenota = $1';
-  const values = [kodenota];
-
   try {
-    const result = await client.query(getNotaQuery, values);
-    const notaData = result.rows[0];
-    return new Nota(notaData);
+    const result = await client.query('SELECT * FROM nota WHERE kodenota = $1', [kodenota]);
+
+    if (result.rows.length > 0) {
+      return result.rows[0];
+    } else {
+      return null;
+    }
   } catch (error) {
-    console.error('Error fetching data:', error);
     throw error;
   }
 };

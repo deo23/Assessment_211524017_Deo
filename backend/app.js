@@ -29,7 +29,8 @@ app.get('/tenan/:kodetenan', tenanController.getTenanController);
 app.delete('/tenan/:kodetenan', tenanController.deleteTenanController);
 app.get('/tenan', tenanController.getAllTenanController);
 
-app.post('/transaksi', notaController.inputNotaController);
+app.post('/nota', notaController.inputNotaController);
+app.get('/nota/:kodenota', notaController.getNotaController);
 // Add routes for other controllers
 
 app.listen(port, () => {
