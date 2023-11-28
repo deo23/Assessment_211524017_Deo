@@ -24,18 +24,21 @@ class Kasir {
 }
 
 const getKasir = async (kodeKasir) => {
-  const getKasirQuery = 'SELECT * FROM Kasir WHERE KodeKasir = $1';
-  const values = [kodeKasir];
-
-  try {
-    const result = await client.query(getKasirQuery, values);
-    const kasirData = result.rows[0];
-    return new Kasir(kasirData);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
-  }
-};
+    try {
+      // Retrieve the kasir from the database
+      const query = 'SELECT * FROM kasir WHERE kodekasir = $1;';
+      const result = await client.query(query, [kodeKasir]);
+  
+      if (result.rows.length > 0) {
+        return result.rows[0]; // Return the retrieved kasir
+      } else {
+        return null; // Kasir not found
+      }
+    } catch (error) {
+      console.error('Error fetching kasir data:', error);
+      throw error;
+    }
+  };
 
 const createKasir = async ({ kodeKasir, nama, hp }) => {
     try {
@@ -68,6 +71,19 @@ const createKasir = async ({ kodeKasir, nama, hp }) => {
       throw error;
     }
   };
+
+const getAllKasir = async () => {
+  try {
+    // Retrieve all kasir from the database
+    const query = 'SELECT * FROM kasir;';
+    const result = await client.query(query);
+
+    return result.rows; // Return the list of all kasir
+  } catch (error) {
+    console.error('Error fetching all kasir data:', error);
+    throw error;
+  }
+};
   
 
 module.exports = {
@@ -75,5 +91,6 @@ module.exports = {
   getKasir,
     createKasir,
     updateKasir,
+    getAllKasir,
   // add updateKasir function here
 };
