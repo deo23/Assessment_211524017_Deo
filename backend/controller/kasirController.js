@@ -19,15 +19,21 @@ const getKasirController = async (req, res) => {
 };
 
 const updateKasirController = async (req, res) => {
-  const { kodeKasir } = req.params;
-
-  try {
-    await updateKasir(kodeKasir, req.body);
-    res.json({ message: 'Data updated successfully' });
-  } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-};
+    const { kodeKasir } = req.params;
+    const { nama, hp } = req.body;
+  
+    try {
+      const updatedKasir = await updateKasir({ kodeKasir, nama, hp });
+      if (updatedKasir) {
+        res.json(updatedKasir);
+      } else {
+        res.status(404).json({ error: 'Kasir not found' });
+      }
+    } catch (error) {
+      console.error('Error updating kasir:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
 
 const createKasirController = async (req, res) => {
     const { kodeKasir, nama, hp } = req.body;
@@ -40,6 +46,8 @@ const createKasirController = async (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   };
+
+
 
 module.exports = {
   getKasirController,

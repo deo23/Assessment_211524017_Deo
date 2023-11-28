@@ -50,11 +50,30 @@ const createKasir = async ({ kodeKasir, nama, hp }) => {
     }
   };
 
-// Add similar update function as in the Barang model
+  const updateKasir = async ({ kodeKasir, nama, hp }) => {
+    try {
+      // Check if the kasir exists
+      const existingKasir = await getKasir(kodeKasir);
+      if (!existingKasir) {
+        return null; // Kasir not found
+      }
+  
+      // Update the kasir in the database
+      const query = 'UPDATE kasir SET nama = $1, hp = $2 WHERE kodekasir = $3 RETURNING *;';
+      const result = await client.query(query, [nama, hp, kodeKasir]);
+  
+      return result.rows[0]; // Return the updated kasir
+    } catch (error) {
+      console.error('Error updating kasir:', error);
+      throw error;
+    }
+  };
+  
 
 module.exports = {
   Kasir,
   getKasir,
     createKasir,
+    updateKasir,
   // add updateKasir function here
 };
