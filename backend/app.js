@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const barangController = require('./controller/barangController');
 const kasirController = require('./controller/kasirController');
 const tenanController = require('./controller/tenanController');
+const notaController = require('./controller/notaController');
 // Import other controllers as needed
 
 const app = express();
@@ -28,6 +29,7 @@ app.get('/tenan/:kodetenan', tenanController.getTenanController);
 app.delete('/tenan/:kodetenan', tenanController.deleteTenanController);
 app.get('/tenan', tenanController.getAllTenanController);
 
+app.post('/transaksi', notaController.inputNotaController);
 // Add routes for other controllers
 
 app.listen(port, () => {

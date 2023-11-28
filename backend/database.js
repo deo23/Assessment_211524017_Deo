@@ -42,18 +42,20 @@ client.connect()
 
     // Create the 'Nota' table
     const createNotaTableQuery = `
-      CREATE TABLE IF NOT EXISTS Nota (
-        KodeNota VARCHAR(10) PRIMARY KEY,
-        KodeTenan VARCHAR(10) NOT NULL,
-        KodeKasir VARCHAR(10) NOT NULL,
-        TglNota DATE NOT NULL,
-        JamNota TIMESTAMP NOT NULL,
-        JumlahBelanja NUMERIC NOT NULL,
-        Diskon NUMERIC NOT NULL,
-        Total NUMERIC NOT NULL,
-        FOREIGN KEY (KodeTenan) REFERENCES Tenan (KodeTenan),
-        FOREIGN KEY (KodeKasir) REFERENCES Kasir (KodeKasir)
-      );
+    CREATE TABLE IF NOT EXISTS Nota (
+      KodeNota VARCHAR(10) PRIMARY KEY,
+      KodeTenan VARCHAR(10) NOT NULL,
+      KodeKasir VARCHAR(10) NOT NULL,
+      TglNota DATE NOT NULL,
+      JamNota TIME NOT NULL,  -- Change to TIME
+      JumlahBelanja NUMERIC NOT NULL,
+      Diskon NUMERIC NOT NULL,
+      Total NUMERIC NOT NULL,
+      FOREIGN KEY (KodeTenan) REFERENCES Tenan (KodeTenan),
+      FOREIGN KEY (KodeKasir) REFERENCES Kasir (KodeKasir)
+    );
+    
+    
     `;
 
     // Create the 'BarangNota' table
