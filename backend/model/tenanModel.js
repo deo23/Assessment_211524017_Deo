@@ -42,6 +42,19 @@ const getTenan = async (kodetenan) => {
   }
 };
 
+const getAllTenan = async () => {
+  try {
+    // Retrieve all tenan from the database
+    const query = 'SELECT * FROM tenan;';
+    const result = await client.query(query);
+
+    return result.rows; // Return all tenan data
+  } catch (error) {
+    console.error('Error fetching all tenan data:', error);
+    throw error;
+  }
+};
+
 const createTenan = async (tenanData) => {
     try {
       // Insert the tenan into the database
@@ -83,12 +96,30 @@ const createTenan = async (tenanData) => {
       throw error;
     }
   };
-// Add similar update function as in the Barang model
+  const deleteTenan = async (kodetenan) => {
+    try {
+      // Check if the tenan exists
+      const existingTenan = await getTenan(kodetenan);
+      if (!existingTenan) {
+        return null; // Tenan not found
+      }
+  
+      // Delete the tenan from the database
+      const query = 'DELETE FROM tenan WHERE kodetenan = $1 RETURNING *;';
+      const result = await client.query(query, [kodetenan]);
+  
+      return result.rows[0]; // Return the deleted tenan
+    } catch (error) {
+      console.error('Error deleting tenan:', error);
+      throw error;
+    }
+  };
 
 module.exports = {
   Tenan,
   getTenan,
     createTenan,
     updateTenan,
-  // add updateTenan function here
+    deleteTenan,
+    getAllTenan,
 };
