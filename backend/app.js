@@ -12,6 +12,7 @@ app.get('/barang/:kodeBarang', barangController.getBarangController);
 app.put('/barang/:kodeBarang', barangController.updateBarangController);
 app.post('/barang', barangController.createBarangController);
 app.get('/barang', barangController.viewBarangController);
+app.delete('/barang/:kodeBarang', barangController.deleteBarangController);
 
 // Add routes for other controllers
 

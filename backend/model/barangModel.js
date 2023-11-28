@@ -114,6 +114,25 @@ const updateBarang = async (barangData) => {
       throw error; // Rethrow the error for handling in the controller
     }
   };
+
+  const deleteBarang = async (kodeBarang) => {
+    try {
+      // Check if the barang exists
+      const existingBarang = await getBarang(kodeBarang);
+      if (!existingBarang) {
+        return null; // Barang not found
+      }
+  
+      // Delete the barang from the database
+      const query = 'DELETE FROM barang WHERE kodebarang = $1 RETURNING *;';
+      const result = await client.query(query, [kodeBarang]);
+  
+      return result.rows[0]; // Return the deleted barang
+    } catch (error) {
+      console.error('Error deleting barang:', error);
+      throw error;
+    }
+  };
     
   
 
@@ -123,4 +142,5 @@ module.exports = {
   updateBarang,
   createBarang,
     viewBarang,
+    deleteBarang,
 };

@@ -3,6 +3,7 @@
 const { Barang, getBarang, updateBarang } = require('../model/barangModel');
 const { createBarang } = require('../model/barangModel');
 const { viewBarang } = require('../model/barangModel');
+const { deleteBarang } = require('../model/barangModel');
 
 const getBarangController = async (req, res) => {
   const { kodeBarang } = req.params;
@@ -78,10 +79,27 @@ const createBarangController = async (req, res) => {
     }
   };
 
+  const deleteBarangController = async (req, res) => {
+    const { kodeBarang } = req.params;
+  
+    try {
+      const deletedBarang = await deleteBarang(kodeBarang);
+      if (deletedBarang) {
+        res.json({ message: 'Barang deleted successfully' });
+      } else {
+        res.status(404).json({ error: 'Barang not found' });
+      }
+    } catch (error) {
+      console.error('Error deleting barang:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
+
 
 module.exports = {
   getBarangController,
   updateBarangController,
   createBarangController,
-    viewBarangController
+    viewBarangController,
+    deleteBarangController,
 };
