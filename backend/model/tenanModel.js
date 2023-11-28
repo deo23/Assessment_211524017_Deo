@@ -39,10 +39,29 @@ const getTenan = async (kodetenan) => {
   }
 };
 
+const createTenan = async (tenanData) => {
+    try {
+      // Insert the tenan into the database
+      const query =
+        'INSERT INTO tenan (kodetenan, namatenan, hp) VALUES ($1, $2, $3) RETURNING *;';
+      const result = await client.query(query, [
+        tenanData.kodetenan,
+        tenanData.namatenan,
+        tenanData.hp,
+      ]);
+  
+      return result.rows[0]; // Return the newly created tenan
+    } catch (error) {
+      console.error('Error creating tenan:', error);
+      throw error;
+    }
+  };
+
 // Add similar update function as in the Barang model
 
 module.exports = {
   Tenan,
   getTenan,
+    createTenan,
   // add updateTenan function here
 };

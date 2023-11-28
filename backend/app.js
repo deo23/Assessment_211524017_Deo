@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const barangController = require('./controller/barangController');
 const kasirController = require('./controller/kasirController');
+const tenanController = require('./controller/tenanController');
 // Import other controllers as needed
 
 const app = express();
@@ -21,6 +22,7 @@ app.get('/kasir/:kodeKasir', kasirController.getKasirController);
 app.get('/kasir', kasirController.getAllKasirController);
 app.delete('/kasir/:kodeKasir', kasirController.deleteKasirController);
 
+app.post('/tenan', tenanController.createTenanController);  
 
 // Add routes for other controllers
 
