@@ -26,15 +26,18 @@ class Tenan {
 }
 
 const getTenan = async (kodetenan) => {
-  const getTenanQuery = 'SELECT * FROM Tenan WHERE Kodetenan = $1';
-  const values = [kodetenan];
-
   try {
-    const result = await client.query(getTenanQuery, values);
-    const tenanData = result.rows[0];
-    return new Tenan(tenanData);
+    // Retrieve the tenan from the database
+    const query = 'SELECT * FROM tenan WHERE kodetenan = $1;';
+    const result = await client.query(query, [kodetenan]);
+
+    if (result.rows.length > 0) {
+      return result.rows[0]; // Return the tenan data
+    } else {
+      return null; // Tenan not found
+    }
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching tenan data:', error);
     throw error;
   }
 };

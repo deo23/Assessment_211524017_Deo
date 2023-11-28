@@ -24,6 +24,7 @@ app.delete('/kasir/:kodeKasir', kasirController.deleteKasirController);
 
 app.post('/tenan', tenanController.createTenanController);  
 app.put('/tenan/:kodetenan', tenanController.updateTenanController);
+app.get('/tenan/:kodetenan', tenanController.getTenanController);
 
 // Add routes for other controllers
 

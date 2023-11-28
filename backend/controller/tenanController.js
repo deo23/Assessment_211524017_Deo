@@ -13,6 +13,7 @@ const getTenanController = async (req, res) => {
       res.status(404).json({ error: 'Tenan not found' });
     }
   } catch (error) {
+    console.error('Error fetching tenan data:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };
