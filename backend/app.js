@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // Import cors
 const barangController = require('./controller/barangController');
 const kasirController = require('./controller/kasirController');
 const tenanController = require('./controller/tenanController');
@@ -8,6 +9,7 @@ const notaController = require('./controller/notaController');
 
 const app = express();
 const port = 3000;
+app.use(cors()); // Use cors middleware
 
 app.use(bodyParser.json());
 
