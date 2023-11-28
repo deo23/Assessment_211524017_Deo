@@ -19,11 +19,17 @@ const getTenanController = async (req, res) => {
 
 const updateTenanController = async (req, res) => {
   const { kodetenan } = req.params;
+  const updatedTenanData = req.body;
 
   try {
-    await updateTenan(kodetenan, req.body);
-    res.json({ message: 'Data updated successfully' });
+    const updatedTenan = await updateTenan(kodetenan, updatedTenanData);
+    if (updatedTenan) {
+      res.json(updatedTenan);
+    } else {
+      res.status(404).json({ error: 'Tenan not found' });
+    }
   } catch (error) {
+    console.error('Error updating tenan:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 };

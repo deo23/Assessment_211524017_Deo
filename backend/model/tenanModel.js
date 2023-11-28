@@ -57,11 +57,35 @@ const createTenan = async (tenanData) => {
     }
   };
 
+  const updateTenan = async (kodetenan, updatedTenanData) => {
+    try {
+      // Check if the tenan exists
+      const existingTenan = await getTenan(kodetenan);
+      if (!existingTenan) {
+        return null; // Tenan not found
+      }
+  
+      // Update the tenan in the database
+      const query =
+        'UPDATE tenan SET namatenan = $1, hp = $2 WHERE kodetenan = $3 RETURNING *;';
+      const result = await client.query(query, [
+        updatedTenanData.namatenan,
+        updatedTenanData.hp,
+        kodetenan,
+      ]);
+  
+      return result.rows[0]; // Return the updated tenan
+    } catch (error) {
+      console.error('Error updating tenan:', error);
+      throw error;
+    }
+  };
 // Add similar update function as in the Barang model
 
 module.exports = {
   Tenan,
   getTenan,
     createTenan,
+    updateTenan,
   // add updateTenan function here
 };
